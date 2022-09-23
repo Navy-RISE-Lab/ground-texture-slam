@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${default}",
+                "include/**",
+                "/usr/local/include/gtsam/3rdparty/Eigen/Eigen",
+                "/usr/local/include/opencv4",
+                "${workspaceFolder}/build/_deps/google_test-src/googletest/include",
+                "/usr/local/include/gtsam/3rdparty/Eigen",
+                "${workspaceFolder}/build/_deps/pybind11-src/include",
+                "/usr/include/python3.8"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+        }
+    ],
+    "version": 4
+}

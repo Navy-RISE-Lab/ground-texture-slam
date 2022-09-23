@@ -1,0 +1,5 @@
+build/
+data/
+docs/
+cobertura-coverage.xml
+clang-tidy-fixes

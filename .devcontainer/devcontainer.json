@@ -1,0 +1,34 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.194.3/containers/cpp
+{
+  "name": "Ground Texture SLAM",
+  "build": {
+    "context": "..",
+    "dockerfile": "Dockerfile",
+    "target": "dev",
+    "args": {
+      "GTSAM_VERSION": "4.1.1",
+      "OPENCV_VERSION": "4.2.0",
+      "OS": "ubuntu:20.04"
+    }
+  },
+  "containerEnv": {
+    "DISPLAY": "host.docker.internal:0.0",
+    "PYTHONPATH": "${containerWorkspaceFolder}/build"
+  },
+  "extensions": [
+    "cschlosser.doxdocgen",
+    "ms-python.python",
+    "ms-vscode.cmake-tools",
+    "ms-vscode.cpptools",
+    "streetsidesoftware.code-spell-checker"
+  ],
+  "settings": {
+    "C_Cpp.clang_format_fallbackStyle": "none",
+    "C_Cpp.clang_format_style": "Google",
+    "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+    "C_Cpp.codeAnalysis.clangTidy.path": "/bin/clang-tidy",
+    "C_Cpp.codeAnalysis.runAutomatically": true,
+    "C_Cpp.intelliSenseEngine": "Default"
+  }
+}

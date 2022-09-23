@@ -1,0 +1,80 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build",
+      "type": "shell",
+      "command": "cmake --build ${workspaceFolder}/build --config Debug --target all",
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Documentation",
+      "type": "shell",
+      "command": "doxygen Doxyfile",
+      "problemMatcher": [],
+      "dependsOn": "Delete Docs"
+    },
+    {
+      "label": "Configure Build System",
+      "type": "shell",
+      "command": "cmake -S ${workspaceFolder} -B ${workspaceFolder}/build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON ",
+      "problemMatcher": []
+    },
+    {
+      "label": "Delete Build",
+      "type": "shell",
+      "command": "rm -rf build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Delete Docs",
+      "type": "shell",
+      "command": "rm -rf docs",
+      "problemMatcher": []
+    },
+    {
+      "label": "Delete Artifacts",
+      "type": "shell",
+      "command": "",
+      "problemMatcher": [],
+      "dependsOn": [
+        "Delete Build",
+        "Delete Docs"
+      ]
+    },
+    {
+      "label": "Run Tests",
+      "type": "shell",
+      "command": "ctest -C Debug -T test --output-on-failure",
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${workspaceFolder}/build"
+      }
+    },
+    {
+      "label": "Run Code Coverage",
+      "type": "shell",
+      "command": "mkdir -p docs/coverage && gcovr -r ${workspaceFolder} --filter ${workspaceFolder}/src/ground_texture_slam/ --exclude-unreachable-branches --exclude-throw-branches --html --html-details --html-medium-threshold 50 --html-high-threshold 100 -o docs/coverage/report.html ${workspaceFolder}/build",
+      "problemMatcher": [],
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Configure Buildsystem",
+        "Build",
+        "Run Tests"
+      ]
+    },
+    {
+      "label": "Run Static Analysis",
+      "type": "shell",
+      "command": "clang-tidy --config='' -p ${workspaceFolder}/build/ ${workspaceFolder}/src/ground_texture_slam/*.cpp",
+      "problemMatcher": [],
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Configure Buildsystem",
+        "Build"
+      ]
+    }
+  ]
+}
