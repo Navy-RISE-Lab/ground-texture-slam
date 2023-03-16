@@ -32,6 +32,13 @@ class KeypointMatcher {
   /**
    * @brief Construct a new KeypointMatcher object
    *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.GroundTextureSLAM.KeypointMatcher(
+   *     options: ground_texture_slam.KeypointMatcher.Options
+   * )
+   * @endcode
+   *
    * @param options The customization for this object.
    * @throws std::invalid_argument thrown if the threshold is outside of the
    * range [0, 1].
@@ -46,6 +53,8 @@ class KeypointMatcher {
    * descriptors. A set of keypoints is considered a match if the distance to
    * the best match is a certain proportion of the distance to the second
    * closest match. This proportion is set by threshold.
+   *
+   * @note This method does not have a direct Python equivalent.
    *
    * @param keypoints1 The keypoints from the first image.
    * @param descriptors1 The descriptors for the first image.
@@ -74,6 +83,19 @@ class KeypointMatcher {
    *
    * @note This is an overloaded method for Python binding. It adds additional
    * overhead for data conversions.
+   *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.KeypointMatcher.find_matched_keypoints(
+   *     keypoints1: numpy.ndarray[numpy.float64[m, 2]],
+   *     descriptors1: numpy.ndarray[numpy.float32[m, n]],
+   *     keypoints2: numpy.ndarray[numpy.float64[m, 2]],
+   *     descriptors2: numpy.ndarray[numpy.float32[m, n]]
+   * ) -> Tuple[
+   *     numpy.ndarray[numpy.float64[m, 2]],
+   *     numpy.ndarray[numpy.float64[m, 2]]
+   * ]
+   * @endcode
    *
    * @param keypoints1 The keypoints from the first image.
    * @param descriptors1 The descriptors for the first image.

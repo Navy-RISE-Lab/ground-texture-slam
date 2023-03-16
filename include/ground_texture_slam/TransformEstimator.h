@@ -63,6 +63,13 @@ class TransformEstimator {
   /**
    * @brief Construct a new TransformEstimator object
    *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.TransformEstimator(
+   *     options: ground_texture_slam.TransformEstimator.Options
+   * )
+   * @endcode
+   *
    * @param options The list of customizations to use.
    * @throws std::invalid_argument thrown if the weight or measurement_sigma is
    * less than or equal to zero.
@@ -78,6 +85,8 @@ class TransformEstimator {
    * graphs. The points in each set should be in the same relative frame of
    * reference. For example, both in the robot's frame of reference at the time
    * the data was taken.
+   *
+   * @note This method does not have a direct Python equivalent.
    *
    * @param points1 A list of matched keypoints from the first frame.
    * @param points2 A list of matched keypoints from the second frame. This
@@ -98,9 +107,20 @@ class TransformEstimator {
    * @brief Given two sets of matched keypoints, estimate a 2D transform between
    * them.
    *
-   * This is an overloaded method that provides pure Eigen arguments and return
-   * types. There is a slight additional overhead with this implementation
-   * versus the other one.
+   * @note This is an overloaded method that provides pure Eigen arguments and
+   * return types. There is a slight additional overhead with this
+   * implementation versus the other one.
+   *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.TransformEstimator.estimate_transform(
+   *     points1: numpy.ndarray[numpy.float64[m, 2]],
+   *     points2: numpy.ndarray[numpy.float64[m, 2]]
+   * ) -> Tuple[
+   *     numpy.ndarray[numpy.float64[3, 1]],
+   *     numpy.ndarray[numpy.float64[3, 3]]
+   * ]
+   * @endcode
    *
    * @param points1 A matrix of matched keypoints from the first frame.
    * @param points2 A matrix of matched keypoints from the second frame. If the

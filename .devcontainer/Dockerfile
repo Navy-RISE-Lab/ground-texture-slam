@@ -4,6 +4,7 @@ ARG OS=ubuntu:latest
 
 # The base stage contains any dependency needed to both run and develop.
 FROM ${OS} AS base
+COPY requirements.txt /tmp/pip-tmp/
 RUN apt update \
   && DEBIAN_FRONTEND=noninteractive \
   apt install -y --no-install-recommends \
@@ -13,58 +14,47 @@ RUN apt update \
   # Add Python for bindings.
   python3 \
   python3-pip \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* \
+  && pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+  && rm -rf /tmp/pip-tmp
 
 # The dev stage is used for development and includes all the compilers, git, and any dependency built from source.
 FROM base AS dev
 RUN apt update \
   && DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
-  gpg-agent \
-  software-properties-common \
-  wget \
-  apt-transport-https \
   build-essential \
-  ca-certificates \
   clang-tidy \
   cmake \
   doxygen \
-  # GTSAM won't compile on gcc9 with tigerlake chips for some reason, so use gcc10.
-  g++-10 \
-  gcc-10 \
   gcovr \
   gdb \
   git \
   graphviz \
+  texlive-latex-base \
+  texlive-latex-extra \
   && rm -rf /var/lib/apt/lists/*
-# Set the compiler to the newer version
-ENV CC=/usr/bin/gcc-10
-ENV CXX=/usr/bin/g++-10
 # Install GTSAM
 WORKDIR /opt
 ARG GTSAM_VERSION=develop
 RUN git clone --branch ${GTSAM_VERSION} --depth 1 https://github.com/borglab/gtsam.git \
-  # Install the needed Python dependencies.
-  && pip install -r /opt/gtsam/python/requirements.txt \
   # Make sure to use the newest compiler.
   && cmake -S gtsam -B gtsam/build \
   # See https://github.com/borglab/gtsam/blob/develop/INSTALL.md for configuration details
   -DCMAKE_BUILD_TYPE=Debug \
   -DGTSAM_BUILD_CONVENIENCE_LIBRARIES:OPTION=OFF \
   -DGTSAM_BUILD_UNSTABLE:OPTION=OFF \
-  -DGTSAM_BUILD_PYTHON=ON \
+  -DGTSAM_BUILD_PYTHON=OFF \
   && cmake --build gtsam/build --target install -- -j$(expr $(nproc) - 1) \
-  # Install the Python bindings as well.
-  && cmake --build gtsam/build --target python-install -- -j$(expr $(nproc) - 1) \
   && ldconfig
 # Install OpenCV
 ARG OPENCV_VERSION=4.x
 RUN git clone --branch ${OPENCV_VERSION} --depth 1 https://github.com/opencv/opencv.git \
-  && git clone --branch ${OPENCV_VERSION} --depth 1 https://github.com/opencv/opencv_contrib.git \
   && cmake -S opencv -B opencv/build \
   # There are a ton of options listed at https://docs.opencv.org/4.5.5/db/d05/tutorial_config_reference.html
   # Anything not explicitly specified here is set to the default value.
   -DCMAKE_BUILD_TYPE=Debug \
-  -DOPENCV_EXTRA_MODULES_PATH=/opt/opencv_contrib/modules \
+  # We don't need all of OpenCV
+  -DBUILD_LIST=core,features2d,flann \
   -DOPENCV_ENABLE_NONFREE=OFF \
   -DBUILD_opencv_python3=ON \
   # Build tests, samples, and applications
@@ -100,10 +90,8 @@ FROM dev AS build
 COPY . /opt/ground_texture_slam
 # Uninstall GTSAM and install the Release version
 RUN xargs rm -rf < /opt/gtsam/build/install_manifest.txt \
-  && pip uninstall -y gtsam \
   && cmake -S /opt/gtsam -B /opt/gtsam/build -DCMAKE_BUILD_TYPE=Release \
-  && cmake --build /opt/gtsam/build --target install -- -j$(expr $(nproc) - 1) \
-  && cmake --build /opt/gtsam/build --target python-install -- -j$(expr $(nproc) - 1)
+  && cmake --build /opt/gtsam/build --target install -- -j$(expr $(nproc) - 1)
 # Uninstall OpenCV and install the Release version
 RUN xargs rm -rf < /opt/opencv/build/install_manifest.txt \
   && cmake -S /opt/opencv -B /opt/opencv/build -DCMAKE_BUILD_TYPE=Release \

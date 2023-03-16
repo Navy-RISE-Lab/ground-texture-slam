@@ -34,7 +34,7 @@ def create_vocabulary() -> None:
     vocab_options.descriptors = all_descriptors
     bag_of_words = ground_texture_slam.BagOfWords(vocab_options)
     bag_of_words.save_vocabulary('example_vocab_python.bow')
-    print('\t\tDone!')
+    print('\tDone!')
 
 
 if __name__ == '__main__':
@@ -42,6 +42,7 @@ if __name__ == '__main__':
     create_vocabulary()
     # Set all the parameters of this fake SLAM system. The important ones are the camera intrinsic
     # matrix and pose, and the vocabulary for bag of words.
+    print('Loading system...')
     options = ground_texture_slam.GroundTextureSLAM.Options()
     options.bag_of_words_options.vocab_file = 'example_vocab_python.bow'
     options.keypoint_matcher_options.match_threshold = 0.6
@@ -70,6 +71,7 @@ if __name__ == '__main__':
     start_covariance = numpy.identity(3, dtype=numpy.float64)
     system = ground_texture_slam.GroundTextureSLAM(
         options, images[0], start_pose, start_covariance)
+    print('Adding images...')
     # Now add each image. This would be done as images are received.
     for i in range(1, len(images)):
         system.insert_measurement(images[i])
@@ -77,6 +79,7 @@ if __name__ == '__main__':
     # The results probably won't be any good, since this is a bunch of random images. But it
     # illustrates the point.
     pose_estimates = system.get_pose_estimates_matrix()
+    print('Results:')
     for i in range(len(images)):
         x = pose_estimates[i, 0]
         y = pose_estimates[i, 1]

@@ -31,12 +31,12 @@ class GroundTextureSLAM {
  public:
   /// @brief The customization options for the system.
   struct Options {
+    // The order is modified to reduced excessive padding.
+    /// @brief Options for keypoint detection, descriptions, and projection.
+    ImageParser::Options image_parser_options;
     /// @brief The bag of words score that must be met or exceeded to be
     /// considered a possible loop closure.
     double bag_of_words_threshold = 0.0;
-    /// @brief The number of matched keypoints score that must be met or
-    /// exceeded to be considered a possible loop closure.
-    unsigned int keypoint_match_threshold = 0;
     /// @brief The covariance score that must not be exceeded to be considered a
     /// possible loop closure.
     double covariance_threshold = std::numeric_limits<double>::max();
@@ -45,18 +45,21 @@ class GroundTextureSLAM {
     size_t sliding_window = 10;  // NOLINT Default value
     /// @brief The variance to use when local odometry fails.
     double fallback_variance = 50.0;  // NOLINT Default value
-    /// @brief Options for the bag of words algorithm.
-    BagOfWords::Options bag_of_words_options;
-    /// @brief Options for keypoint detection, descriptions, and projection.
-    ImageParser::Options image_parser_options;
     /// @brief Options for matching keypoints between images.
     KeypointMatcher::Options keypoint_matcher_options;
     /// @brief Options for estimating transforms between projected keypoints.
     TransformEstimator::Options transform_estimator_options;
+    /// @brief Options for the bag of words algorithm.
+    BagOfWords::Options bag_of_words_options;
+    /// @brief The number of matched keypoints score that must be met or
+    /// exceeded to be considered a possible loop closure.
+    unsigned int keypoint_match_threshold = 0;
   };
 
   /**
    * @brief Construct a new GroundTextureSLAM object.
+   *
+   * @note This method does not have a direct Python equivalent.
    *
    * @param options The list of customizations for the system.
    * @param start_image An image to use at the starting pose.
@@ -75,6 +78,16 @@ class GroundTextureSLAM {
    *
    * @note This is an overloaded method for Python binding. It adds additional
    * overhead for data conversions.
+   *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.GroundTextureSLAM(
+   *     options: ground_texture_slam.GroundTextureSLAM.Options,
+   *     start_image: numpy.ndarray[numpy.unint8[m, n]],
+   *     start_pose: numpy.ndarray[numpy.float64[3, 1]],
+   *     start_covariance: numpy.ndarray[numpy.float64[3, 3]]
+   * )
+   * @endcode
    *
    * @param options The list of customizations for the system.
    * @param start_image An image to use at the starting pose.
@@ -95,6 +108,8 @@ class GroundTextureSLAM {
    * This will apply optimization and return all pose estimates associated with
    * each image. Updated estimates are not saved for use by the system.
    *
+   * @note This method does not have a direct Python equivalent.
+   *
    * @return std::vector<gtsam::Pose2> The vector of poses associated with each
    * image.
    */
@@ -109,6 +124,12 @@ class GroundTextureSLAM {
    * @note This is an overloaded method for Python binding. It adds additional
    * overhead for data conversions.
    *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.GroundTextureSLAM.get_pose_estimates_matrix() ->
+   * numpy.ndarray[numpy.float64[m, 3]]
+   * @endcode
+   *
    * @return Eigen::MatrixX3d The vector of poses associated with each
    * image.
    */
@@ -118,6 +139,8 @@ class GroundTextureSLAM {
    * @brief Add a new image observation to the system.
    *
    * This image is assumed undistorted.
+   *
+   * @note This method does not have a direct Python equivalent.
    *
    * @param image The image to add. Type must be CV_8U.
    */
@@ -130,6 +153,13 @@ class GroundTextureSLAM {
    *
    * @note This is an overloaded method for Python binding. It adds additional
    * overhead for data conversions.
+   *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.GroundTextureSLAM.insert_measurement(
+   *     image: numpy.ndarray[numpy.uint8[m, n]]
+   * ) -> None
+   * @endcode
    *
    * @param image The image to add.
    */

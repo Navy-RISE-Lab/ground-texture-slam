@@ -73,7 +73,9 @@
     "stop_token": "cpp",
     "filesystem": "cpp",
     "codecvt": "cpp",
-    "dense": "cpp"
+    "dense": "cpp",
+    "numbers": "cpp",
+    "semaphore": "cpp"
   },
   "cSpell.words": [
     "Axisd",

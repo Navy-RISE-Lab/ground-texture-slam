@@ -93,6 +93,29 @@ TEST(KeypointMatcher, FindMatchedKeypointsCorrect) {
   ASSERT_TRUE(result.isApprox(expected_result));
 }
 
+/// @test Ensure an empty result is returned if empty lists are passed in.
+TEST(KeypointMatcher, EmptyInEmptyOut) {
+  auto data = createKeypointMatcherData();
+  Eigen::MatrixX2d empty_points;
+  Eigen::MatrixXf empty_descriptors;
+  ground_texture_slam::KeypointMatcher::Options options;
+  options.match_threshold = 0.7;
+  ground_texture_slam::KeypointMatcher matcher(options);
+  // If any input is empty, the output should be empty.
+  auto matches = matcher.findMatchedKeypoints(
+      empty_points, empty_descriptors, std::get<2>(data), std::get<3>(data));
+  ASSERT_EQ(std::get<0>(matches).rows(), 0);
+  ASSERT_EQ(std::get<1>(matches).rows(), 0);
+  matches = matcher.findMatchedKeypoints(std::get<0>(data), std::get<1>(data),
+                                         empty_points, empty_descriptors);
+  ASSERT_EQ(std::get<0>(matches).rows(), 0);
+  ASSERT_EQ(std::get<1>(matches).rows(), 0);
+  matches = matcher.findMatchedKeypoints(empty_points, empty_descriptors,
+                                         empty_points, empty_descriptors);
+  ASSERT_EQ(std::get<0>(matches).rows(), 0);
+  ASSERT_EQ(std::get<1>(matches).rows(), 0);
+}
+
 /// @test Ensure thresholds are within bounds.
 TEST(KeypointMatcher, RejectBadThreshold) {
   ground_texture_slam::KeypointMatcher::Options options;

@@ -5,75 +5,152 @@
   "tasks": [
     {
       "label": "Build",
+      "group": "build",
       "type": "shell",
-      "command": "cmake --build ${workspaceFolder}/build --config Debug --target all",
-      "problemMatcher": []
+      "command": "cmake",
+      "args": [
+        "--build",
+        "${workspaceFolder}/build",
+        "--target",
+        "all",
+        "--",
+        "-j"
+      ],
+      "dependsOn": [
+        "Configure Build System"
+      ]
     },
     {
       "label": "Build Documentation",
+      "group": "build",
       "type": "shell",
-      "command": "doxygen Doxyfile",
-      "problemMatcher": [],
-      "dependsOn": "Delete Docs"
+      "command": "doxygen",
+      "args": [
+        "Doxyfile"
+      ],
+      "dependsOn": [
+        "Delete Documentation"
+      ]
     },
     {
       "label": "Configure Build System",
+      "group": "build",
       "type": "shell",
-      "command": "cmake -S ${workspaceFolder} -B ${workspaceFolder}/build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON ",
-      "problemMatcher": []
-    },
-    {
-      "label": "Delete Build",
-      "type": "shell",
-      "command": "rm -rf build",
-      "problemMatcher": []
-    },
-    {
-      "label": "Delete Docs",
-      "type": "shell",
-      "command": "rm -rf docs",
-      "problemMatcher": []
+      "command": "cmake",
+      "args": [
+        "-S",
+        "${workspaceFolder}",
+        "-B",
+        "${workspaceFolder}/build",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DBUILD_TESTING=ON"
+      ],
+      "dependsOn": [
+        "Delete Build"
+      ]
     },
     {
       "label": "Delete Artifacts",
+      "group": "build",
       "type": "shell",
       "command": "",
-      "problemMatcher": [],
+      "dependsOrder": "parallel",
       "dependsOn": [
         "Delete Build",
-        "Delete Docs"
+        "Delete Documentation"
+      ]
+    },
+    {
+      "label": "Delete Build",
+      "group": "build",
+      "type": "shell",
+      "command": "rm",
+      "args": [
+        "-rf",
+        "build"
+      ]
+    },
+    {
+      "label": "Delete Documentation",
+      "group": "build",
+      "type": "shell",
+      "command": "rm",
+      "args": [
+        "-rf",
+        "docs"
+      ],
+    },
+    {
+      "label": "Make Coverage Folder",
+      "group": "test",
+      "type": "shell",
+      "command": "mkdir",
+      "args": [
+        "-p",
+        "docs/coverage"
+      ]
+    },
+    {
+      "label": "Run Code Coverage",
+      "group": "test",
+      "type": "shell",
+      "command": "gcovr",
+      "args": [
+        "-r",
+        "${workspaceFolder}",
+        "--filter",
+        "${workspaceFolder}/src/ground_texture_slam/",
+        "--exclude-unreachable-branches",
+        "--exclude-throw-branches",
+        "--html",
+        "--html-details",
+        "--html-medium-threshold",
+        "50",
+        "--html-high-threshold",
+        "100",
+        "-o",
+        "${workspaceFolder}/docs/coverage/report.html",
+        "${workspaceFolder}/build"
+      ],
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "Run Tests",
+        "Make Coverage Folder"
       ]
     },
     {
       "label": "Run Tests",
+      "group": "test",
       "type": "shell",
-      "command": "ctest -C Debug -T test --output-on-failure",
-      "problemMatcher": [],
+      "command": "ctest",
+      "args": [
+        "-C",
+        "Debug",
+        "-T",
+        "test",
+        "--output-on-failure"
+      ],
       "options": {
         "cwd": "${workspaceFolder}/build"
-      }
-    },
-    {
-      "label": "Run Code Coverage",
-      "type": "shell",
-      "command": "mkdir -p docs/coverage && gcovr -r ${workspaceFolder} --filter ${workspaceFolder}/src/ground_texture_slam/ --exclude-unreachable-branches --exclude-throw-branches --html --html-details --html-medium-threshold 50 --html-high-threshold 100 -o docs/coverage/report.html ${workspaceFolder}/build",
-      "problemMatcher": [],
-      "dependsOrder": "sequence",
+      },
       "dependsOn": [
-        "Configure Buildsystem",
-        "Build",
-        "Run Tests"
+        "Build"
       ]
     },
     {
       "label": "Run Static Analysis",
+      "group": "test",
       "type": "shell",
-      "command": "clang-tidy --config='' -p ${workspaceFolder}/build/ ${workspaceFolder}/src/ground_texture_slam/*.cpp",
-      "problemMatcher": [],
-      "dependsOrder": "sequence",
+      "command": "clang-tidy",
+      "args": [
+        "--config=''",
+        "-p",
+        "${workspaceFolder}/build/",
+        "${workspaceFolder}/src/ground_texture_slam/*.cpp"
+      ],
       "dependsOn": [
-        "Configure Buildsystem",
-        "Build"
+        "Run Tests"
       ]
     }
   ]

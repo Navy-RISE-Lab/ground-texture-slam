@@ -42,13 +42,11 @@ class ImageParser {
     /// @brief The max keypoints to detect.
     int features = 500;  // NOLINT Default value
     /// @brief See OpenCV::ORB::create for a description.
-    float scale_factor =
-        1.2;  // NOLINT Default value
+    float scale_factor = 1.2;  // NOLINT Default value
     /// @brief See OpenCV::ORB::create for a description.
     int levels = 8;  // NOLINT Default value
     /// @brief See OpenCV::ORB::create for a description.
-    int edge_threshold =
-        31;  // NOLINT Default value
+    int edge_threshold = 31;  // NOLINT Default value
     /// @brief See OpenCV::ORB::create for a description.
     int first_level = 0;  // NOLINT Default value
     /// @brief See OpenCV::ORB::create for a description.
@@ -70,12 +68,21 @@ class ImageParser {
   /**
    * @brief Construct a new ImageParser object.
    *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.ImageParser(
+   *     options: ground_texture_slam.ImageParser.Options
+   * )
+   * @endcode
+   *
    * @param options The customization to use for parsing.
    */
   explicit ImageParser(Options options);
 
   /**
    * @brief Run detection and description on a given image.
+   *
+   * @note This method does not have a direct Python equivalent.
    *
    * @param image The OpenCV image to parse. Must be type CV_8U.
    * @return Returns a tuple containing the list of keypoints, translated into
@@ -92,8 +99,20 @@ class ImageParser {
   /**
    * @brief Run detection and description on a given image.
    *
-   * This is an overloaded method to provide convenient argument and return
-   * types. It adds additional overhead for data conversions under the hood.
+   * @note This is an overloaded method to provide convenient argument and
+   * return types. It adds additional overhead for data conversions under the
+   * hood.
+   *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.ImageParser.parse_image(
+   *     image: numpy.ndarray[numpy.uint8[m, n]]
+   * ) -> Tuple[
+   *     numpy.ndarray[numpy.float64[m, 2]],
+   *     numpy.ndarray[numpy.float32[m, 2]],
+   *     numpy.ndarray[numpy.uint8[m, n]]
+   * ]
+   * @endcode
    *
    * @param image The image to parse
    * @return Returns a tuple containing the list of keypoints, translated into

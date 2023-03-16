@@ -58,6 +58,13 @@ class BagOfWords {
    * @brief Construct a new BagOfWords object from a previously built vocabulary
    * tree.
    *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.BagOfWords(
+   *     options: ground_texture_slam.BagOfWords.Options
+   * )
+   * @endcode
+   *
    * @param options The customization options for this object.
    * @throws std::invalid_argument thrown if the vocabulary file doesn't exist.
    */
@@ -66,12 +73,21 @@ class BagOfWords {
   /**
    * @brief Construct a new BagOfWords object with a brand new vocabulary tree.
    *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.BagOfWords(
+   *     vocab_options: ground_texture_slam.BagOfWords.VocabOptions
+   * )
+   * @endcode
+   *
    * @param vocab_options The customization options for this object.
    */
   explicit BagOfWords(VocabOptions vocab_options);
 
   /**
    * @brief Insert descriptors for a single image into the database.
+   *
+   * @note This method does not have a direct Python equivalent.
    *
    * @param descriptors The descriptors to insert. They must be CV_8U types.
    * @return unsigned int The ID of the inserted descriptors.
@@ -82,8 +98,15 @@ class BagOfWords {
   /**
    * @brief Insert descriptors for a single image into the database.
    *
-   * @note This is an overloaded method for Python binding. It adds additional
-   * overhead for data conversions.
+   * @note This is an overloaded method for Python binding. It adds
+   * additional overhead for data conversions.
+   *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.BagOfWords.insert_to_database(
+   *     descriptors: numpy.ndarray[numpy.uint8[m, n]]
+   * ) -> int
+   * @endcode
    *
    * @param descriptors The descriptors to insert.
    * @return unsigned int The ID of the inserted descriptors.
@@ -94,6 +117,8 @@ class BagOfWords {
   /**
    * @brief Determine match scores against all descriptors already in the
    * database.
+   *
+   * @note This method does not have a direct Python equivalent.
    *
    * @param descriptors The descriptors to find matches against. Type must be
    * CV_8U.
@@ -112,6 +137,13 @@ class BagOfWords {
    * @note This is an overloaded method for Python binding. It adds additional
    * overhead for data conversions.
    *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.BagOfWords.query_database(
+   *     descriptors: numpy.ndarray[numpy.uint8[m, n]]
+   * ) -> Dict[int, float]
+   * @endcode
+   *
    * @param descriptors The descriptors to find matches against.
    * @return std::map<unsigned int, double> A map of the matching IDs and
    * associated scores.
@@ -122,6 +154,11 @@ class BagOfWords {
 
   /**
    * @brief Save the vocabulary tree to file for later import.
+   *
+   * @note Python syntax:
+   * @code {.py}
+   * ground_texture_slam.BagOfWords.save_vocabulary(vocab_file: str) -> None
+   * @endcode
    *
    * @param vocab_file The file to write to.
    */

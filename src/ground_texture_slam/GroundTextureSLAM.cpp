@@ -239,7 +239,8 @@ void pybindGroundTextureSLAM(pybind11::module_& module) {
              &GroundTextureSLAM::getPoseEstimatesMatrix);
   gtslam.def(/*name_=*/"insert_measurement",
              pybind11::overload_cast<const Eigen::Matrix<uint8_t, -1, -1>&>(
-                 &GroundTextureSLAM::insertMeasurement));
+                 &GroundTextureSLAM::insertMeasurement),
+             pybind11::arg(/*name=*/"image"));
 }
 // GCOVR_EXCL_STOP
 #endif  // BUILD_PYTHON

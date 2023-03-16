@@ -8,9 +8,22 @@ Distribution Statement A - Approved for public release; distribution is unlimite
 under NAVAIR Public Release Authorization 2022-0586.
 
 ## Installation ##
-This system is targeted towards Ubuntu 20.04, OpenCV version 4.2.0, and GTSAM version 4.1.1. It is
-highly likely that other versions would work, but they have not been tested. There are two ways to
-use this library: from a Docker image or build from source manually.
+This system is targeted towards the following OS distributions and dependency versions. Others are
+likely possible as well, but these are the ones that have automated unit tests.
+
+__Ubuntu__
+  - 20.04
+
+__GTSAM__
+  - 4.0.3
+  - 4.1.0
+  - 4.1.1
+
+__OpenCV__
+  - 4.X where X is not 4 (4.4.X is likely to work, but because of an issue with Eigen and some
+  Tensor library, my automated tests can't test it)
+
+There are two ways to use this library: from a Docker image or build from source manually.
 
 ### Docker ###
 There is a Docker file that you can build that will provide everything. From the project workspace,

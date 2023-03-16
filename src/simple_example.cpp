@@ -34,7 +34,7 @@ void createVocabulary() {
   vocab_options.descriptors = all_descriptors;
   ground_texture_slam::BagOfWords bag_of_words(vocab_options);
   bag_of_words.saveVocabulary("example_vocab.bow");
-  std::cout << "\t\tDone!" << std::endl;
+  std::cout << "\tDone!" << std::endl;
 }
 
 auto main() -> int {
@@ -43,6 +43,7 @@ auto main() -> int {
   // Set all the parameters of this fake SLAM system. The important ones
   // are the camera intrinsic matrix and pose, and the vocabulary for bag of
   // words.
+  std::cout << "Loading system..." << std::endl;
   ground_texture_slam::GroundTextureSLAM::Options options;
   options.bag_of_words_options.vocab_file = "example_vocab.bow";
   options.keypoint_matcher_options.match_threshold = 0.6;
@@ -67,6 +68,7 @@ auto main() -> int {
   Eigen::Matrix3d start_covariance = 1e-9 * Eigen::Matrix3d::Identity();
   ground_texture_slam::GroundTextureSLAM system(options, images[0], start_pose,
                                                 start_covariance);
+  std::cout << "Adding images..." << std::endl;
   // Now add each image. This would be done as images are received.
   for (size_t i = 1; i < images.size(); ++i) {
     system.insertMeasurement(images[i]);
@@ -74,8 +76,10 @@ auto main() -> int {
   // Once done, get the optimized poses. This can be done incrementally after
   // each image as well. The results probably won't be any good, since this is a
   // bunch of random images. But it illustrates the point.
+  std::cout << "Results:" << std::endl;
   std::vector<gtsam::Pose2> pose_estimates = system.getPoseEstimates();
   for (auto &&pose : pose_estimates) {
-    std::cout << pose << std::endl;
+    std::cout << pose.x() << ", " << pose.y() << ", " << pose.theta()
+              << std::endl;
   }
 }

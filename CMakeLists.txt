@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11.0)
 project(ground_texture_slam 
-  VERSION 1.0.0
+  VERSION 1.0.1
   DESCRIPTION "A SLAM system that only uses the ground beneath the robot"
   LANGUAGES CXX
 )
@@ -9,8 +9,8 @@ set(CMAKE_CXX_STANDARD 17)
 # Provides default install locations for Ubuntu
 include(GNUInstallDirs)
 
-find_package(GTSAM REQUIRED)
-find_package(OpenCV REQUIRED)
+find_package(GTSAM 4.0.3 REQUIRED)
+find_package(OpenCV 4.0.0 REQUIRED)
 include(FetchContent)
 # Add support for Python bindings
 FetchContent_Declare(pybind11
@@ -18,7 +18,6 @@ FetchContent_Declare(pybind11
   GIT_TAG v2.9.1
   GIT_SHALLOW true
 )
-FetchContent_MakeAvailable(pybind11)
 # Add support for DBoW2
 FetchContent_Declare(
   DBoW2
@@ -26,7 +25,10 @@ FetchContent_Declare(
   GIT_TAG master
   GIT_SHALLOW true
 )
-FetchContent_MakeAvailable(DBoW2)
+# Turn off DBoW2's demo before adding to reduce things to compile.
+set(BUILD_Demo OFF CACHE BOOL "Whether to build DBoW2's demo")
+FetchContent_MakeAvailable(pybind11 DBoW2)
+unset(BUILD_DEMO)
 
 if (BUILD_TESTING)
   # Add flags to emit coverage data
@@ -51,13 +53,17 @@ target_include_directories(ground_texture_slam
     ${DBoW2_SOURCE_DIR}/include
     ${GTSAM_INCLUDE_DIR}
     ${OpenCV_INCLUDE_DIRS}
-    )
-    target_link_libraries(ground_texture_slam
-    PUBLIC
+)
+target_link_libraries(ground_texture_slam
+  PUBLIC
     DBoW2
     gtsam
     ${OpenCV_LIBS}
-    )
+)
+target_compile_definitions(ground_texture_slam
+  PUBLIC
+    OPENCV_DISABLE_EIGEN_TENSOR_SUPPORT
+)
 install(
   TARGETS
     ground_texture_slam
@@ -86,7 +92,8 @@ target_link_libraries(ground_texture_slam_python
 )
 target_compile_definitions(ground_texture_slam_python
   PUBLIC
-    -DBUILD_PYTHON
+    BUILD_PYTHON
+    OPENCV_DISABLE_EIGEN_TENSOR_SUPPORT
 )
 set_target_properties(ground_texture_slam_python
   PROPERTIES

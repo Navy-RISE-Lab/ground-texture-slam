@@ -37,6 +37,11 @@ auto KeypointMatcher::findMatchedKeypoints(
         "Keypoints and descriptors from the second image must be the same "
         "size!");
   }
+  // If either set is zero, this is a trivial problem to solve.
+  if (keypoints1.empty() || keypoints2.empty()) {
+    std::vector<gtsam::Point2> empty_vector;
+    return std::make_pair(empty_vector, empty_vector);
+  }
   // Ensure the descriptors are 32 bit floats, since that is the only one FLANN
   // takes.
   cv::Mat descriptors1_32f;
