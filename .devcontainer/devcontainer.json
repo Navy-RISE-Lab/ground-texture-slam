@@ -8,26 +8,30 @@
     "target": "dev",
     "args": {
       "GTSAM_VERSION": "4.1.1",
-      "OPENCV_VERSION": "4.6.0",
-      "OS": "ubuntu:20.04"
+      "OPENCV_VERSION": "4.7.0",
+      "OS": "ubuntu:22.04"
     }
   },
   "containerEnv": {
     "DISPLAY": "host.docker.internal:0.0",
     "PYTHONPATH": "${containerWorkspaceFolder}/build"
   },
-  "extensions": [
-    "cschlosser.doxdocgen",
-    "ms-vscode.cmake-tools",
-    "ms-vscode.cpptools",
-    "streetsidesoftware.code-spell-checker"
-  ],
-  "settings": {
-    "C_Cpp.clang_format_fallbackStyle": "none",
-    "C_Cpp.clang_format_style": "Google",
-    "C_Cpp.codeAnalysis.clangTidy.enabled": true,
-    "C_Cpp.codeAnalysis.clangTidy.path": "/bin/clang-tidy",
-    "C_Cpp.codeAnalysis.runAutomatically": true,
-    "C_Cpp.intelliSenseEngine": "Default"
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "cschlosser.doxdocgen",
+        "ms-vscode.cmake-tools",
+        "ms-vscode.cpptools",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "C_Cpp.clang_format_fallbackStyle": "none",
+        "C_Cpp.clang_format_style": "Google",
+        "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+        "C_Cpp.codeAnalysis.clangTidy.path": "/bin/clang-tidy",
+        "C_Cpp.codeAnalysis.runAutomatically": true,
+        "C_Cpp.intelliSenseEngine": "default"
+      }
+    }
   }
 }

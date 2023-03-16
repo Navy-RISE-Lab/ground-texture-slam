@@ -91,5 +91,8 @@
   ],
   "C_Cpp.codeAnalysis.clangTidy.enabled": true,
   "C_Cpp.codeAnalysis.runAutomatically": true,
-  "C_Cpp.codeAnalysis.clangTidy.path": "/bin/clang-tidy"
+  "C_Cpp.codeAnalysis.clangTidy.path": "/bin/clang-tidy",
+  "C_Cpp.codeAnalysis.clangTidy.args": [
+    "--extra-arg=-std=c++20"
+  ]
 }
