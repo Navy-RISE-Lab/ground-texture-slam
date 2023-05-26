@@ -1,0 +1,128 @@
+Warning: loop closing detection not performing!
+processing 1678441033.99324584 using 0.022925138473510742 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.02662897 using 0.05998110771179199 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.06000996 using 0.06661510467529297 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.09319091 using 0.02973318099975586 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.12660980 using 0.07971930503845215 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.15994883 using 0.028227567672729492 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.19320393 using 0.023424148559570312 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.22656393 using 0.040985107421875 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.25990891 using 0.06992053985595703 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.29316878 using 0.01585674285888672 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.32643175 using 0.022740602493286133 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.35990191 using 0.025654077529907227 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.39309883 using 0.017872095108032227 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.42644191 using 0.043523550033569336 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.45988178 using 0.06529092788696289 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.49313188 using 0.02238297462463379 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.52652383 using 0.1204833984375 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.55985594 using 0.10351920127868652 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.59312797 using 0.08665108680725098 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.62647986 using 0.4129512310028076 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.65982676 using 0.07021617889404297 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.69307876 using 0.07842278480529785 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.72647381 using 0.07137560844421387 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.75979686 using 0.0702824592590332 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.79304886 using 0.0948483943939209 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.82644176 using 0.08440256118774414 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.85977983 using 0.10344314575195312 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.89293885 using 0.07835841178894043 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.92628574 using 0.0563814640045166 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.95975375 using 0.06986880302429199 seconds
+Warning: loop closing detection not performing!
+processing 1678441034.99292588 using 0.0795445442199707 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.02640176 using 0.12068343162536621 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.05974388 using 0.04920792579650879 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.09281588 using 0.07671499252319336 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.12637782 using 0.06716465950012207 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.15972090 using 0.04336047172546387 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.19279075 using 0.1364281177520752 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.22633886 using 0.09807157516479492 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.25970793 using 0.09203290939331055 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.29273582 using 0.06609058380126953 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.32627583 using 0.0818166732788086 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.35964489 using 0.07452225685119629 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.39273381 using 0.0603184700012207 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.42631197 using 0.05406379699707031 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.45961595 using 0.12550973892211914 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.49275589 using 0.145965576171875 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.52606583 using 0.10405898094177246 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.55960393 using 0.03168463706970215 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.59274697 using 0.12030458450317383 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.62619781 using 0.13164710998535156 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.65958285 using 0.03972434997558594 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.69271398 using 0.10093235969543457 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.72614288 using 0.06109213829040527 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.75955582 using 0.08873200416564941 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.79269075 using 0.18094515800476074 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.82620478 using 0.0714728832244873 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.85954690 using 0.05090951919555664 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.89264297 using 0.12456059455871582 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.92619896 using 0.1506636142730713 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.95950079 using 0.12807488441467285 seconds
+Warning: loop closing detection not performing!
+processing 1678441035.99261785 using 0.12933778762817383 seconds
+Warning: loop closing detection not performing!
+processing 1678441036.02614975 using 0.06323695182800293 seconds
+Warning: loop closing detection not performing!
+processing 1678441036.05946994 using 0.035480499267578125 seconds
+Warning: loop closing detection not performing!
+processing 1678441036.09261775 using 0.06639838218688965 seconds

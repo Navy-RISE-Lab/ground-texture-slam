@@ -9,20 +9,20 @@
  */
 // NOLINTNEXTLINE Skip test macros
 TEST(TransformEstimator, ConstructRejectBadMeasurementSigma) {
-  ground_texture_slam::TransformEstimator::Options options;
+  ground_texture_slam_new::TransformEstimator::Options options;
   options.measurement_sigma = 0.0;
   // NOLINTNEXTLINE Skip test macros
-  ASSERT_THROW(ground_texture_slam::TransformEstimator estimator(options),
+  ASSERT_THROW(ground_texture_slam_new::TransformEstimator estimator(options),
                std::invalid_argument);
 }
 
 /// @test Ensure the constructor rejects invalid weights.
 // NOLINTNEXTLINE Skip test macros
 TEST(TransformEstimator, ConstructRejectBadWeight) {
-  ground_texture_slam::TransformEstimator::Options options;
+  ground_texture_slam_new::TransformEstimator::Options options;
   options.weight = 0.0;
   // NOLINTNEXTLINE Skip test macros
-  ASSERT_THROW(ground_texture_slam::TransformEstimator estimator(options),
+  ASSERT_THROW(ground_texture_slam_new::TransformEstimator estimator(options),
                std::invalid_argument);
 }
 
@@ -50,22 +50,22 @@ TEST(TransformEstimator, EstimateCorrect) {
     points2(i, 1) = point2.y();
   }
   // Test with each type of estimator model
-  ground_texture_slam::TransformEstimator::Options options;
+  ground_texture_slam_new::TransformEstimator::Options options;
   for (size_t i = 0; i < 3; ++i) {
-    auto type = ground_texture_slam::TransformEstimator::Type::HUBER;
+    auto type = ground_texture_slam_new::TransformEstimator::Type::HUBER;
     switch (i) {
       case 0:
-        type = ground_texture_slam::TransformEstimator::Type::GEMAN_MCCLURE;
+        type = ground_texture_slam_new::TransformEstimator::Type::GEMAN_MCCLURE;
         break;
       case 1:
-        type = ground_texture_slam::TransformEstimator::Type::CAUCHY;
+        type = ground_texture_slam_new::TransformEstimator::Type::CAUCHY;
         break;
       case 2:
-        type = ground_texture_slam::TransformEstimator::Type::HUBER;
+        type = ground_texture_slam_new::TransformEstimator::Type::HUBER;
         break;
     }
     options.type = type;
-    ground_texture_slam::TransformEstimator estimator(options);
+    ground_texture_slam_new::TransformEstimator estimator(options);
     auto results = estimator.estimateTransform(points1, points2);
     // The zero doesn't play well with float comparisons, so bump up the
     // tolerance.
@@ -75,8 +75,8 @@ TEST(TransformEstimator, EstimateCorrect) {
 
 /// @test Ensure the estimation rejects empty lists.
 TEST(TransformEstimator, EstimateEmptyVectors) {
-  ground_texture_slam::TransformEstimator::Options options;
-  ground_texture_slam::TransformEstimator estimator(options);
+  ground_texture_slam_new::TransformEstimator::Options options;
+  ground_texture_slam_new::TransformEstimator estimator(options);
   std::vector<gtsam::Point2> empty_points;
   std::vector<gtsam::Point2> full_points;
   full_points.push_back(gtsam::Point2(1.0, 0.0));
@@ -94,8 +94,8 @@ TEST(TransformEstimator, EstimateEmptyVectors) {
  *
  */
 TEST(TransformEstimator, EstimateRejectMismatchedPoints) {
-  ground_texture_slam::TransformEstimator::Options options;
-  ground_texture_slam::TransformEstimator estimator(options);
+  ground_texture_slam_new::TransformEstimator::Options options;
+  ground_texture_slam_new::TransformEstimator estimator(options);
   std::vector<gtsam::Point2> points1;
   std::vector<gtsam::Point2> points2;
   for (size_t i = 0; i < 3; i++) {

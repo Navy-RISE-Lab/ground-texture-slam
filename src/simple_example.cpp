@@ -20,6 +20,27 @@ auto createImages() -> std::vector<Eigen::Matrix<uint8_t, -1, -1>> {
   return images;
 }
 
+// void LoadImages(const string &strAssociationFilename, vector<string> &vstrImageFilenamesRGB)
+// {
+//     ifstream fAssociation;
+//     fAssociation.open(strAssociationFilename.c_str());
+//     while(!fAssociation.eof())
+//     {
+//         string s;
+//         getline(fAssociation, s);
+//         if(!s.empty())
+//         {
+//           stringstream ss;
+//           ss << s;
+//           string sRGB;
+//           ss >> sRGB;
+//           vstrImageFilenamesRGB.push_back(sRGB);      
+//         }
+//     }
+// }
+
+
+
 /// @brief Build a vocabulary tree out of random noise descriptors and save it
 /// locally for later use by the SLAM system.
 void createVocabulary() {
@@ -30,9 +51,9 @@ void createVocabulary() {
   }
   // The defaults are fine, since this is just an example. But they could be set
   // here.
-  ground_texture_slam::BagOfWords::VocabOptions vocab_options;
+  ground_texture_slam_new::BagOfWords::VocabOptions vocab_options;
   vocab_options.descriptors = all_descriptors;
-  ground_texture_slam::BagOfWords bag_of_words(vocab_options);
+  ground_texture_slam_new::BagOfWords bag_of_words(vocab_options);
   bag_of_words.saveVocabulary("example_vocab.bow");
   std::cout << "\tDone!" << std::endl;
 }
@@ -44,7 +65,7 @@ auto main() -> int {
   // are the camera intrinsic matrix and pose, and the vocabulary for bag of
   // words.
   std::cout << "Loading system..." << std::endl;
-  ground_texture_slam::GroundTextureSLAM::Options options;
+  ground_texture_slam_new::GroundTextureSLAM::Options options;
   options.bag_of_words_options.vocab_file = "example_vocab.bow";
   options.keypoint_matcher_options.match_threshold = 0.6;
   // Normally, you want a sliding window so that successive images don't get
@@ -66,11 +87,12 @@ auto main() -> int {
   auto images = createImages();
   Eigen::Vector3d start_pose = Eigen::Vector3d::Identity();
   Eigen::Matrix3d start_covariance = 1e-9 * Eigen::Matrix3d::Identity();
-  ground_texture_slam::GroundTextureSLAM system(options, images[0], start_pose,
+  ground_texture_slam_new::GroundTextureSLAM system(options, images[0], start_pose,
                                                 start_covariance);
   std::cout << "Adding images..." << std::endl;
   // Now add each image. This would be done as images are received.
   for (size_t i = 1; i < images.size(); ++i) {
+
     system.insertMeasurement(images[i]);
   }
   // Once done, get the optimized poses. This can be done incrementally after

@@ -51,7 +51,7 @@ There are two ways to use this library: from a Docker image or build from source
 There is a Docker file that you can build that will provide everything. From the project workspace,
 just run:
 ```bash
-docker build --build-arg GTSAM_VERSION=4.1.1 --build-arg OPENCV_VERSION=4.2.0 --build-arg OS=ubuntu:20.04 --target deploy --tag ground_texture_slam:deploy -f .\.devcontainer\Dockerfile .
+docker build --build-arg GTSAM_VERSION=4.1.1 --build-arg OPENCV_VERSION=4.2.0 --build-arg OS=ubuntu:20.04 --target deploy --tag ground_texture_slam:deploy -f ./.devcontainer/Dockerfile .
 ```
 Again, you can customize the arguments if you wish, but this is untested. This library installs the
 C++ and Python libraries in the relevant directories so they are available system wide.

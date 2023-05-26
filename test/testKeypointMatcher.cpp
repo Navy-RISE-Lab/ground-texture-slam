@@ -57,9 +57,9 @@ TEST(KeypointMatcher, ConvertDescriptorType) {
   cv::eigen2cv(std::get<3>(data), descriptors2_cv32f);
   descriptors2_cv32f.convertTo(descriptors2_cv8u, CV_8U);
   // Do the actual matching.
-  ground_texture_slam::KeypointMatcher::Options options;
+  ground_texture_slam_new::KeypointMatcher::Options options;
   options.match_threshold = 0.7;
-  ground_texture_slam::KeypointMatcher matcher(options);
+  ground_texture_slam_new::KeypointMatcher matcher(options);
   auto matches = matcher.findMatchedKeypoints(keypoints1, descriptors1_cv8u,
                                               keypoints2, descriptors2_cv8u);
   // Make sure the conversion didn't warp the values somehow.
@@ -76,9 +76,9 @@ TEST(KeypointMatcher, ConvertDescriptorType) {
 /// @test Ensure the matching works for a simple trivial setup.
 TEST(KeypointMatcher, FindMatchedKeypointsCorrect) {
   auto data = createKeypointMatcherData();
-  ground_texture_slam::KeypointMatcher::Options options;
+  ground_texture_slam_new::KeypointMatcher::Options options;
   options.match_threshold = 0.7;
-  ground_texture_slam::KeypointMatcher matcher(options);
+  ground_texture_slam_new::KeypointMatcher matcher(options);
   auto matches =
       matcher.findMatchedKeypoints(std::get<0>(data), std::get<1>(data),
                                    std::get<2>(data), std::get<3>(data));
@@ -98,9 +98,9 @@ TEST(KeypointMatcher, EmptyInEmptyOut) {
   auto data = createKeypointMatcherData();
   Eigen::MatrixX2d empty_points;
   Eigen::MatrixXf empty_descriptors;
-  ground_texture_slam::KeypointMatcher::Options options;
+  ground_texture_slam_new::KeypointMatcher::Options options;
   options.match_threshold = 0.7;
-  ground_texture_slam::KeypointMatcher matcher(options);
+  ground_texture_slam_new::KeypointMatcher matcher(options);
   // If any input is empty, the output should be empty.
   auto matches = matcher.findMatchedKeypoints(
       empty_points, empty_descriptors, std::get<2>(data), std::get<3>(data));
@@ -118,20 +118,20 @@ TEST(KeypointMatcher, EmptyInEmptyOut) {
 
 /// @test Ensure thresholds are within bounds.
 TEST(KeypointMatcher, RejectBadThreshold) {
-  ground_texture_slam::KeypointMatcher::Options options;
+  ground_texture_slam_new::KeypointMatcher::Options options;
   options.match_threshold = -0.00000001;
-  EXPECT_THROW(ground_texture_slam::KeypointMatcher matcher(options),
+  EXPECT_THROW(ground_texture_slam_new::KeypointMatcher matcher(options),
                std::invalid_argument);
   options.match_threshold = 1.000000001;
-  EXPECT_THROW(ground_texture_slam::KeypointMatcher matcher(options),
+  EXPECT_THROW(ground_texture_slam_new::KeypointMatcher matcher(options),
                std::invalid_argument);
 }
 
 /// @test Ensure errors thrown if keypoint and descriptor sizes don't match.
 TEST(KeypointMatcher, RejectMismatchedSize) {
   Eigen::MatrixX2d keypoints1;
-  ground_texture_slam::KeypointMatcher::Options options;
-  ground_texture_slam::KeypointMatcher matcher(options);
+  ground_texture_slam_new::KeypointMatcher::Options options;
+  ground_texture_slam_new::KeypointMatcher matcher(options);
   Eigen::MatrixX2d keypoints2;
   Eigen::MatrixXf descriptors1;
   Eigen::MatrixXf descriptors2;
@@ -156,13 +156,13 @@ TEST(KeypointMatcher, SeedWorks) {
   Eigen::MatrixXf descriptors2 = Eigen::MatrixXf::Random(300, 32);
   // Run the matching twice with the same seed. The results should be the same.
   // Do the construction both times, because the seed is set at construction.
-  ground_texture_slam::KeypointMatcher::Options options;
+  ground_texture_slam_new::KeypointMatcher::Options options;
   options.match_threshold = 0.99;
   options.seed = 0;
-  ground_texture_slam::KeypointMatcher matcher1(options);
+  ground_texture_slam_new::KeypointMatcher matcher1(options);
   auto result1 = matcher1.findMatchedKeypoints(keypoints1, descriptors1,
                                                keypoints2, descriptors2);
-  ground_texture_slam::KeypointMatcher matcher2(options);
+  ground_texture_slam_new::KeypointMatcher matcher2(options);
   auto result2 = matcher2.findMatchedKeypoints(keypoints1, descriptors1,
                                                keypoints2, descriptors2);
   ASSERT_EQ(std::get<0>(result1).rows(), std::get<0>(result2).rows());
@@ -171,7 +171,7 @@ TEST(KeypointMatcher, SeedWorks) {
   ASSERT_TRUE(std::get<1>(result1).isApprox(std::get<1>(result2)));
   // Running without the seed should produce different values.
   options.seed = std::nullopt;
-  ground_texture_slam::KeypointMatcher matcher3(options);
+  ground_texture_slam_new::KeypointMatcher matcher3(options);
   auto result3 = matcher3.findMatchedKeypoints(keypoints1, descriptors1,
                                                keypoints2, descriptors2);
   // Since this is random, they matrices might or might not be the same size.

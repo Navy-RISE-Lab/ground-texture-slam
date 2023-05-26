@@ -48,9 +48,9 @@ auto createDatabaseData() -> std::vector<MatrixU> {
 TEST(BagOfWords, RejectBadType) {
   auto vocabulary = createVocabularyData();
   auto descriptors = createDatabaseData();
-  ground_texture_slam::BagOfWords::VocabOptions vocab_options;
+  ground_texture_slam_new::BagOfWords::VocabOptions vocab_options;
   vocab_options.descriptors = vocabulary;
-  ground_texture_slam::BagOfWords bag_of_words(vocab_options);
+  ground_texture_slam_new::BagOfWords bag_of_words(vocab_options);
   cv::Mat wrong_type = cv::Mat::zeros(500, 32, CV_32F);
   ASSERT_THROW(bag_of_words.insertToDatabase(wrong_type),
                std::invalid_argument);
@@ -60,9 +60,9 @@ TEST(BagOfWords, RejectBadType) {
 /// @test Ensure that the system throws an error if the vocabulary bag file
 /// doesn't exist.
 TEST(BagOfWords, RejectNonexistantVocab) {
-  ground_texture_slam::BagOfWords::Options options;
+  ground_texture_slam_new::BagOfWords::Options options;
   options.vocab_file = "fake_file.bow";
-  ASSERT_THROW(ground_texture_slam::BagOfWords bow(options),
+  ASSERT_THROW(ground_texture_slam_new::BagOfWords bow(options),
                std::invalid_argument);
 }
 
@@ -71,27 +71,27 @@ TEST(BagOfWords, ScoreCorrectly) {
   auto vocabulary = createVocabularyData();
   auto descriptors = createDatabaseData();
   size_t target_descriptor = 1;
-  ground_texture_slam::BagOfWords::VocabOptions vocab_options;
+  ground_texture_slam_new::BagOfWords::VocabOptions vocab_options;
   vocab_options.descriptors = vocabulary;
   // Iterate over each score and weight type. They should all produce the same
   // results.
-  std::vector<ground_texture_slam::BagOfWords::WeightingType> all_weights = {
-      ground_texture_slam::BagOfWords::WeightingType::BINARY,
-      ground_texture_slam::BagOfWords::WeightingType::IDF,
-      ground_texture_slam::BagOfWords::WeightingType::TF,
-      ground_texture_slam::BagOfWords::WeightingType::TF_IDF};
-  std::vector<ground_texture_slam::BagOfWords::ScoringType> all_scores = {
-      ground_texture_slam::BagOfWords::ScoringType::BHATTACHARYYA,
-      ground_texture_slam::BagOfWords::ScoringType::CHI_SQUARE,
-      ground_texture_slam::BagOfWords::ScoringType::DOT_PRODUCT,
-      ground_texture_slam::BagOfWords::ScoringType::KL,
-      ground_texture_slam::BagOfWords::ScoringType::L1_NORM,
-      ground_texture_slam::BagOfWords::ScoringType::L2_NORM};
+  std::vector<ground_texture_slam_new::BagOfWords::WeightingType> all_weights = {
+      ground_texture_slam_new::BagOfWords::WeightingType::BINARY,
+      ground_texture_slam_new::BagOfWords::WeightingType::IDF,
+      ground_texture_slam_new::BagOfWords::WeightingType::TF,
+      ground_texture_slam_new::BagOfWords::WeightingType::TF_IDF};
+  std::vector<ground_texture_slam_new::BagOfWords::ScoringType> all_scores = {
+      ground_texture_slam_new::BagOfWords::ScoringType::BHATTACHARYYA,
+      ground_texture_slam_new::BagOfWords::ScoringType::CHI_SQUARE,
+      ground_texture_slam_new::BagOfWords::ScoringType::DOT_PRODUCT,
+      ground_texture_slam_new::BagOfWords::ScoringType::KL,
+      ground_texture_slam_new::BagOfWords::ScoringType::L1_NORM,
+      ground_texture_slam_new::BagOfWords::ScoringType::L2_NORM};
   for (auto &&score : all_scores) {
     for (auto &&weight : all_weights) {
       vocab_options.weight = weight;
       vocab_options.scoring = score;
-      ground_texture_slam::BagOfWords bag_of_words(vocab_options);
+      ground_texture_slam_new::BagOfWords bag_of_words(vocab_options);
       // Add every descriptor to the database and score. The closest match
       // should be the same one.
       for (auto &&descriptor : descriptors) {
@@ -104,11 +104,11 @@ TEST(BagOfWords, ScoreCorrectly) {
       // used, then it is the lowest.
       std::map<unsigned int, double>::iterator closest_match;
       switch (score) {
-        case ground_texture_slam::BagOfWords::ScoringType::BHATTACHARYYA:
-        case ground_texture_slam::BagOfWords::ScoringType::CHI_SQUARE:
-        case ground_texture_slam::BagOfWords::ScoringType::DOT_PRODUCT:
-        case ground_texture_slam::BagOfWords::ScoringType::L1_NORM:
-        case ground_texture_slam::BagOfWords::ScoringType::L2_NORM:
+        case ground_texture_slam_new::BagOfWords::ScoringType::BHATTACHARYYA:
+        case ground_texture_slam_new::BagOfWords::ScoringType::CHI_SQUARE:
+        case ground_texture_slam_new::BagOfWords::ScoringType::DOT_PRODUCT:
+        case ground_texture_slam_new::BagOfWords::ScoringType::L1_NORM:
+        case ground_texture_slam_new::BagOfWords::ScoringType::L2_NORM:
         default:
           closest_match = std::max_element(
               results.begin(), results.end(),
@@ -117,7 +117,7 @@ TEST(BagOfWords, ScoreCorrectly) {
                 return a.second < b.second;
               });
           break;
-        case ground_texture_slam::BagOfWords::ScoringType::KL:
+        case ground_texture_slam_new::BagOfWords::ScoringType::KL:
           closest_match = std::min_element(
               results.begin(), results.end(),
               [](const std::pair<unsigned int, double> &a,
@@ -135,9 +135,9 @@ TEST(BagOfWords, ScoreCorrectly) {
 TEST(BagOfWords, SequentialIndices) {
   auto vocabulary = createVocabularyData();
   auto descriptors = createDatabaseData();
-  ground_texture_slam::BagOfWords::VocabOptions vocab_options;
+  ground_texture_slam_new::BagOfWords::VocabOptions vocab_options;
   vocab_options.descriptors = vocabulary;
-  ground_texture_slam::BagOfWords bag_of_words(vocab_options);
+  ground_texture_slam_new::BagOfWords bag_of_words(vocab_options);
   // Make sure each ID matches.
   for (unsigned int i = 0; i < 50; ++i) {
     unsigned int id = bag_of_words.insertToDatabase(descriptors[0]);
